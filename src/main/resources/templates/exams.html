@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <meta charset="UTF-8">
+    <title>Zaliczenia</title>
+    <style type="text/css" rel="stylesheet">
+    .vertical-center {
+        min-height: 80%;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+    }
+    /*th,td {
+        border: solid 1px black;
+        padding: 5px;
+    }*/
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div th:include="layout :: navigationPanel"></div>
+        <div class="vertical-center">
+            <div class="container-fluid">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nazwa przedmiotu</th>
+                            <th scope="col">Nazwisko prowadzącego</th>
+                            <th scope="col">Forma zajęć</th>
+                            <th scope="col">Ocena</th>
+                            <th scope="col">Punkty ECTS</th>
+                            <th scope="col">Edytuj</th>
+                            <th scope="col">Usuń</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="exam : ${exams}">
+                            <td th:text="${exam.nameSubject}"></td>
+                            <td th:text="${exam.nameLecturer}"></td>
+                            <td th:text="${exam.type}"></td>
+                            <td th:text="${exam.mark}"></td>
+                            <td th:text="${exam.ects}"></td>
+                            <td><form th:action="@{'/edit-exam/' + ${exam.examid} }" method="GET" th:object="${exam}"><button class="btn btn-light" type="submit">Edytuj</button></form></td>
+                            <td><form th:action="@{'/delete-exam/' + ${exam.examid} }" method="GET" th:object="${exam}"><button class="btn btn-light" type="submit">Usuń</button></form></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-2">
+                        <form th:action="@{/add-exam}" method="GET">
+                            <button class="btn btn-dark text-center col-md-12" style="float: none; margin: 2% auto 2%;" type="submit">Dodaj zaliczenie</button>
+                        </form>
+                    </div>
+                    <div class="col-md-5"></div>
+                </div>
+                <div class="row" >
+                    <div class="col-md-5"></div>
+                    <div class="col-md-2">
+                        <form th:action="@{/exams}" method="POST">
+                            <button class="btn btn-dark text-center col-md-12" style="float: none; margin: 2% auto 2%;" type="submit">Wylicz średnią</button>
+                        </form>
+                    </div>
+                    <div class="col-md-5"></div>
+                </div>
+                <div class="row">
+                    <label class="badge badge-pill badge-secondary text-center" style="float: none; margin: 2% auto 2%;" th:text="${average}"></label>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang= "pl" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <meta charset="UTF-8">
+    <title>Edycja zaliczenia</title>
+    <style type="text/css" rel="stylesheet">
+    .vertical-center {
+        min-height: 80%;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+    }
+    .display-4 {
+        float: none; 
+        margin: -3% auto 5%;
+    }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div th:include="layout :: navigationPanel"></div>
+        <div class="vertical-center">
+            <div class="container-fluid">
+                <div class="row"><h1 class="display-4">Edycja zaliczenia</h1></div>
+                <form th:action="@{/edit-exam}" method="POST" th:object="${exam}">
+                    <input type="hidden" id="id" th:field="*{examid}"/>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-5">
+                            <label class="col-md-5" for="nameSubject">Nazwa przedmiotu </label>
+                            <input class="col-md-5" type="text" th:field="*{nameSubject}" placeholder="Nazwa przedmiotu" id="nameSubject"/>
+                        </div>
+                        <span class="error badge badge-danger col-md-3" th:if="${#fields.hasErrors('nameSubject')}" th:errors="*{nameSubject}"></span><br>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-5">
+                            <label class="col-md-5" for="nameLecturer">Nazwisko prowadzącego </label>
+                            <input class="col-md-5" type="text" th:field="*{nameLecturer}" placeholder="Nazwisko prowadzącego" id="nameLecturer"/>
+                        </div>
+                        <span class="error badge badge-danger col-md-3" th:if="${#fields.hasErrors('nameLecturer')}" th:errors="*{nameLecturer}"></span><br>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-5">
+                            <label class="col-md-5" for="type">Forma zajęć </label>
+                            <input class="col-md-5" type="text" th:field="*{type}" id="type" list="types"/>
+                        </div>
+                        <span class="error badge badge-danger col-md-3" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span><br>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-5">
+                            <label class="col-md-5" for="mark">Ocena </label>
+                            <input class="col-md-5" type="text" th:field="*{mark}" id="mark" list="marks"/>
+                        </div>
+                        <span class="error badge badge-danger col-md-3" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}"></span><br>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-5">
+                            <label class="col-md-5" for="ects">Punkty ECTS </label>
+                            <input class="col-md-5" type="number" th:field="*{ects}" id="ects" value = "0" step="1" min="0" max="15" required/>
+                        </div>
+                        <span class="error badge badge-danger col-md-3" th:if="${#fields.hasErrors('ects')}" th:errors="*{ects}"></span><br>
+                    </div>
+                    <div class="row" >
+                        <div class="col-md-5"></div>
+                        <div class="col-md-2">
+                            <button class="btn btn-dark text-center col-md-12" type="submit">Edytuj</button>
+                        </div>
+                        <div class="col-md-5"></div>
+                    </div>
+                
+                    <datalist id="marks">
+                        <option value="2">
+                        <option value="3">
+                        <option value="3.5">
+                        <option value="4">
+                        <option value="4.5">
+                        <option value="5">
+                    </datalist>
+                
+                    <datalist id="types">
+                        <option value="Wykład">
+                        <option value="Ćwiczenia">
+                        <option value="Laboratorium">
+                        <option value="Seminarium">
+                    </datalist>
+            </form>
+            </div>
+        </div>
+    </body>
+</html>
